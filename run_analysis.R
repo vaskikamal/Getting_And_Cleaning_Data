@@ -1,7 +1,4 @@
-setwd("E:/CourseEraProject")
-
 library(reshape2)
-
 
 # read data into data frames
 subject_train <- read.table("UCI HAR Dataset/train/subject_train.txt")
@@ -23,6 +20,7 @@ names(X_test) <- featureNames$V2
 # add column name for label files
 names(y_train) <- "activity"
 names(y_test) <- "activity"
+
 # combine files into one dataset
 train <- cbind(subject_train, y_train, X_train)
 test <- cbind(subject_test, y_test, X_test)
@@ -37,3 +35,4 @@ melted <- melt(cumulated, id=c("subjectID","activity"))
 tidy <- dcast(melted, subjectID+activity ~ variable, mean)
 
 write.csv(tidy, "tidy.csv", row.names=FALSE)
+write.table(tidy, file = "tidy_data.txt")
